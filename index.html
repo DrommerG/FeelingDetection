@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0b0d12" />
+    <meta name="description" content="Un espacio privado para hacer una pausa y observar tu expresión." />
+    <title>¿Cómo te sientes, de verdad?</title>
+  </head>
+  <body>
+    <div id="app">
+      <main class="page-shell">
+        <header class="page-heading">
+          <h1>¿Cómo te sientes, de verdad?</h1>
+          <p>Respira un momento y haz una pausa. Puedes expresarlo con tus palabras o dejar que la cámara ofrezca una lectura aproximada de tu expresión.</p>
+        </header>
+
+        <div class="checkin-grid">
+          <section class="panel camera-panel" aria-labelledby="cameraHeading">
+            <div class="panel-heading">
+              <div>
+                <h2 id="cameraHeading">Una lectura de tu expresión</h2>
+                <p>La cámara solo se usa cuando decides activarla.</p>
+              </div>
+              <span class="live-pill" id="livePill"><span></span> CÁMARA APAGADA</span>
+            </div>
+
+            <div class="camera-stage" id="cameraStage">
+              <video id="video" autoplay muted playsinline aria-label="Vista de tu cámara"></video>
+              <canvas id="overlay" aria-hidden="true"></canvas>
+              <span class="sr-only" id="frameSize">-- × --</span>
+              <span class="sr-only" id="faceCount">00</span>
+              <span class="sr-only" id="faceTotal">00</span>
+              <div class="empty-state" id="emptyState">
+                <div class="empty-orbit"><i data-lucide="scan-face"></i></div>
+                <p>Tu cámara permanece apagada hasta que tú lo decidas.</p>
+                <button class="primary-button" id="startButton" type="button"><i data-lucide="camera"></i><span>Activar cámara</span></button>
+              </div>
+              <div class="stage-error" id="stageError" hidden role="alert"></div>
+            </div>
+
+            <div class="camera-controls">
+              <p class="emotion-count" id="emotionCount">Sin lecturas todavía</p>
+              <div class="camera-actions">
+                <label class="camera-picker" aria-label="Seleccionar cámara">
+                  <i data-lucide="video"></i>
+                  <select id="cameraSelect" disabled aria-label="Seleccionar cámara">
+                    <option value="">Cámara</option>
+                  </select>
+                </label>
+                <button class="icon-button" id="flipButton" type="button" title="Voltear imagen" aria-label="Voltear imagen" aria-pressed="false" disabled><i data-lucide="flip-horizontal-2"></i></button>
+                <button class="icon-button" id="fullscreenButton" type="button" title="Pantalla completa" aria-label="Pantalla completa"><i data-lucide="maximize"></i></button>
+                <button class="stop-button" id="stopButton" type="button" hidden><span>Apagar cámara</span></button>
+              </div>
+            </div>
+
+            <div class="emotion-labels" id="emotionLabels" aria-live="polite">
+              <span class="quiet-placeholder">Las expresiones estimadas aparecerán aquí.</span>
+            </div>
+
+            <div class="insight-card" id="faceList">
+              <span class="insight-kicker">UN MOMENTO PARA TI</span>
+              <p>Cuando haya una lectura, puedes tomarla como una invitación a hacer una pausa, no como una conclusión.</p>
+            </div>
+
+            <details class="coordinates-details">
+              <summary>Coordenadas de los rostros</summary>
+              <div class="coordinate-list" id="coordinateList" aria-live="polite">
+                <p class="coordinate-empty">Esperando detecciones · píxeles</p>
+              </div>
+            </details>
+
+            <div class="camera-settings">
+              <label for="thresholdSlider">Umbral de detección <span id="thresholdValue">45%</span></label>
+              <input id="thresholdSlider" type="range" min="20" max="80" value="45" step="5" aria-label="Umbral de confianza" />
+            </div>
+          </section>
+
+          <section class="panel words-panel" aria-labelledby="wordsHeading">
+            <div class="panel-heading">
+              <div>
+                <h2 id="wordsHeading">O ponlo en palabras</h2>
+                <p>Comparte tanto o tan poco como quieras. Esto se queda en tu navegador.</p>
+              </div>
+            </div>
+            <form class="reflection-form" id="reflectionForm">
+              <label for="reflectionText">¿Qué te está pasando por la mente?</label>
+              <textarea id="reflectionText" rows="6" placeholder="Últimamente me he sentido un poco…"></textarea>
+              <div class="reflection-actions">
+                <span>Tus palabras no se envían ni se guardan.</span>
+                <button class="primary-button reflection-button" id="reflectionButton" type="submit">Acompáñame</button>
+              </div>
+              <p class="reflection-response" id="reflectionResponse" role="status" hidden></p>
+            </form>
+          </section>
+        </div>
+
+        <footer class="page-footer">
+          <span>La expresión facial solo ofrece una estimación visual; no puede saber con certeza cómo te sientes.</span>
+          <span><i data-lucide="shield-check"></i> PROCESAMIENTO LOCAL</span>
+        </footer>
+        <span class="sr-only" id="statusText" aria-live="polite">Cámara desactivada</span>
+        <span class="sr-only" id="statusIndicator"></span>
+      </main>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
